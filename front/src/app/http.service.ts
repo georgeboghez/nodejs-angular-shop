@@ -18,8 +18,8 @@ export class HttpService {
   increaseQty(payload: any) {
     return this.http.post(`${environment.baseURL}/cart`, payload);
   }
-  decreaseQty(payload: any) {
-    return this.http.post(`${environment.baseURL}/cart`, payload);
+  removeFromCart(payload: any) {
+    return this.http.patch(`${environment.baseURL}/cart`, payload);
   }
   emptyCart() {
     return this.http.delete(`${environment.baseURL}/cart/empty-cart`);

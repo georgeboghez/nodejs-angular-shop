@@ -12,7 +12,6 @@ export class CartComponent implements OnInit {
   _getCart(): void {
     this.http.getCartItems().subscribe((data: any) => {
       this.carts = data.data;
-      console.log(this.carts);
     });
   }
   _increamentQTY(id: any, quantity: any): void {
@@ -25,14 +24,14 @@ export class CartComponent implements OnInit {
       alert('Product Added');
     });
   }
-  _decrementQTY(id: any, quantity: any): void {
+  _removeProduct(id: any): void {
     const payload = {
-      productId: id,
-      quantity,
+      productId: id
     };
-    this.http.decreaseQty(payload).subscribe(() => {
+    console.log(id)
+    this.http.removeFromCart(payload).subscribe(() => {
       this._getCart();
-      alert('Product Added');
+      alert('Product Removed');
     });
   }
   _emptyCart(): void {

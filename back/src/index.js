@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const app = express();
 
 app.use(function (req, res, next) {
-  console.log(req.url + ' from ' + req.ip) // populated!
+  console.log(req.method + ' ' + req.url + ' from ' + req.ip) // populated!
   next()
 })
 

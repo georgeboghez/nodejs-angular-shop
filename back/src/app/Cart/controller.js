@@ -19,17 +19,19 @@ exports.addItemToCart = async (req, res) => {
         if (cart) {
             //---- Check if index exists ----
             const indexFound = cart.items.findIndex(item => item.productId.id == productId);
-            //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
-            if (indexFound !== -1 && quantity <= 0) {
-                cart.items.splice(indexFound, 1);
-                if (cart.items.length == 0) {
-                    cart.subTotal = 0;
-                } else {
-                    cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
-                }
-            }
-            //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
-            else if (indexFound !== -1) {
+            // if(cart.items[indexFound]["quantity"] == 1 && quantity == -1) {
+
+            // }
+            // //------This removes an item from the the cart if the quantity is set to zero, We can use this method to remove an item from the list  -------
+            // if (indexFound !== -1 && quantity <= 0) {
+            //     cart.items.splice(indexFound, 1);
+            //     if (cart.items.length == 0) {
+            //         cart.subTotal = 0;
+            //     } else {
+            //         cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
+            //     }
+            // }
+            if (indexFound !== -1) {
                 cart.items[indexFound].quantity = cart.items[indexFound].quantity + quantity;
                 cart.items[indexFound].total = cart.items[indexFound].quantity * productDetails.price;
                 cart.items[indexFound].price = productDetails.price
@@ -96,6 +98,49 @@ exports.getCart = async (req, res) => {
             status: true,
             data: cart
         })
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({
+            type: "Invalid",
+            msg: "Something went wrong",
+            err: err
+        })
+    }
+}
+
+exports.removeItemFromCart = async (req, res) => {
+    const {
+        productId
+    } = req.body;
+    console.log(req.body)
+    try {
+        let cart = await cartRepository.cart();
+        let productDetails = await productRepository.productById(productId);
+        if (!productDetails) {
+            return res.status(500).json({
+                type: "Not Found",
+                msg: "Invalid request"
+            })
+        }
+        //--If Cart Exists ----
+        if (cart) {
+            const indexFound = cart.items.findIndex(item => item.productId.id == productId);
+            if (indexFound !== -1) {
+                cart.items.splice(indexFound, 1);
+                cart.subTotal = cart.items.map(item => item.total).reduce((acc, next) => acc + next);
+            } else {
+                return res.status(404).json({
+                    type: "Invalid",
+                    msg: "Item not found"
+                })
+            }
+            let data = await cart.save();
+            res.status(200).json({
+                type: "success",
+                mgs: "Process successful",
+                data: data
+            })
+        }
     } catch (err) {
         console.log(err)
         res.status(400).json({

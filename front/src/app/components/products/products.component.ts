@@ -14,7 +14,6 @@ export class ProductsComponent implements OnInit {
   _getProducts(): void {
     this.http.getAllProducts().subscribe((data: any) => {
       this.products = data.data;
-      console.log(this.products);
     });
   }
   _addItemToCart( id: any, quantity: any): void {

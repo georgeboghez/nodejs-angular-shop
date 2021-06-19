@@ -17,7 +17,7 @@
                 <td>
                     <button class="btn btn-primary btn-sm" (click)="_increamentQTY(item.productId._id,1)">+</button>
                     {{ item.quantity }}
-                    <button class="btn btn-primary btn-sm" (click)="_increamentQTY(item.productId._id,-1)">-</button>
+                    <button class="btn btn-primary btn-sm" (click)="(item.quantity > 1) ? _increamentQTY(item.productId._id,-1) : carts.items.length > 1 ? _removeProduct(item.productId._id) : _emptyCart()">-</button>
                 </td>
                 <td class="text-right">
                     <h5 class="font-medium m-b-30">{{ item.total }}</h5>
