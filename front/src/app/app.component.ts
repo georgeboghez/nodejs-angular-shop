@@ -47,9 +47,9 @@ export class AppComponent implements OnInit {
         this.socialUser = user;
         this.isLoggedin = (user != null);
         if(this.isLoggedin) {
-          console.log(this.socialUser);
-          sessionStorage.setItem('isLoggedin',JSON.stringify(this.isLoggedin));
-          sessionStorage.setItem('socialUser',JSON.stringify(this.socialUser));
+          // console.log(this.socialUser);
+          // sessionStorage.setItem('isLoggedin',JSON.stringify(this.isLoggedin));
+          // sessionStorage.setItem('socialUser',JSON.stringify(this.socialUser));
           // sessionStorage.setItem('authToken',JSON.stringify(this.socialUser.authToken));
           // console.log(sessionStorage.getItem('authToken'));
         }
