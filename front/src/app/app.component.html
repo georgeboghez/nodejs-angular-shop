@@ -1,21 +1,39 @@
-<app-navbar></app-navbar>
-<section>
-  <div class="banner-innerpage" style="
-  background-image: url(https://images.pexels.com/photos/1005638/pexels-photo-1005638.jpeg?cs=srgb&dl=pexels-oleg-magni-1005638.jpg&fm=jpg);
-  ">
+<div *ngIf="isLoggedin === false">
+  <div>
+    <button type="button" (click)="loginWithGoogle()" class="btn btn-danger">Login with Google</button>
+    <button type="button" (click)="loginWithFacebook()" class="btn btn-primary">Signin with Facebook</button>
+  </div>
+</div>
+
+<div *ngIf="isLoggedin === true">
+  <!-- <div class="form-group">
+    <label>First Name</label>
+    <input type="text" class="form-control" [value]="socialUser.firstName" id="firstname" readonly>
+  </div>
+  <div class="form-group">
+    <label>Last Name</label>
+    <input type="text" class="form-control" [value]="socialUser.lastName" id="lastname" readonly>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" class="form-control" [value]="socialUser.email" id="email" readonly>
+  </div> -->
+  <app-navbar></app-navbar>
+  <section>
+    <div class="banner-innerpage" style="
+    background-image: url(https://images.pexels.com/photos/1005638/pexels-photo-1005638.jpeg?cs=srgb&dl=pexels-oleg-magni-1005638.jpg&fm=jpg);
+    ">
     <div class="container">
-      <!-- Row  -->
       <div class="row justify-content-center">
-        <!-- Column -->
         <div class="col-md-6 align-self-center text-center" data-aos="fade-down" data-aos-duration="1200">
           <h1 class="title">Shop listing</h1>
           <h6 class="subtitle op-8">
             We are small team of creative people working together.
           </h6>
         </div>
-        <!-- Column -->
       </div>
     </div>
   </div>
 </section>
 <router-outlet></router-outlet>
+<button type="button" (click)="logOut()" class="btn btn-primary">Log Out</button>
