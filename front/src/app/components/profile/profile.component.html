@@ -1,0 +1,31 @@
+<section>
+    <div class="spacer">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-lg-9">
+                    <div>
+                        <div *ngIf="isLoggedin">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" [value]="_socialUser().firstName" id="firstname" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" [value]="_socialUser().lastName" id="lastname" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" [value]="_socialUser().email" id="email" readonly>
+                            </div>
+                            <button type="button" (click)="_logOut()" class="btn btn-danger">Logout</button>
+                        </div>
+                        <div *ngIf="!isLoggedin">
+                            <button type="button" (click)="_loginWithGoogle()" class="btn btn-danger">Login with Google</button>
+                            <button type="button" (click)="_loginWithFacebook()" class="btn btn-primary">Signin with Facebook</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

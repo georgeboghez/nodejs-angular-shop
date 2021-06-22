@@ -13,6 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { AUTH_IDs } from './config';
+import { ProfileComponent } from './components/profile/profile.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { AUTH_IDs } from './config';
     AppComponent,
     CartComponent,
     NavbarComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,7 @@ import { AUTH_IDs } from './config';
     ReactiveFormsModule,
     SocialLoginModule
   ],
-  providers: [
+  providers: [ CookieService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

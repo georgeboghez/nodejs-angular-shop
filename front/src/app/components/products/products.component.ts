@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth.service';
 import { HttpService } from '../../http.service';
 interface Item {
   [key: string]: any  
@@ -19,7 +20,8 @@ export class ProductsComponent implements OnInit {
     });
   }
   _getLoggedInStatus(): void {
-    this.isLoggedin = sessionStorage.getItem("isLoggedin") != null && sessionStorage.getItem("isLoggedin") != undefined;
+    let su = AuthService.getIntance().socialUser;
+    this.isLoggedin = su != null && su != undefined;
   }
   _addItemToCart( id: any, quantity: any): void {
     let payload = {
@@ -49,13 +51,13 @@ export class ProductsComponent implements OnInit {
     alert('Product Added');
   }
   _getSessionCart(): void {
-    let tempSessionCart = sessionStorage.getItem("sessionCart");
+    let tempSessionCart = localStorage.getItem("sessionCart");
     if(tempSessionCart !== null) {
       this.sessionCart = JSON.parse(tempSessionCart);
     }
   }
   _updateSessionCart(): void {
-    sessionStorage.setItem("sessionCart", JSON.stringify(this.sessionCart));
+    localStorage.setItem("sessionCart", JSON.stringify(this.sessionCart));
   }
   ngOnInit(): void {
     this._getSessionCart();

@@ -8,13 +8,13 @@
               <!-- <img [src]="'http://localhost:5000/' + product.image" alt="wrapkit" class="img-fluid" /> -->
               <div class="card border-0">
                 <h6>
-                  <a href="#" class="link">{{ product.name }}</a>
+                  <a href="#" class="link text-dark">{{ product.name }}</a>
                 </h6>
                 <!-- <h6 class="subtitle">by Wisdom</h6> -->
                 <h5 class="font-medium m-b-30">
                   {{product.price}} RON
                 </h5>
-                <button class="btn btn-md btn-info" (click)="isLoggedin ? _addItemToCart(product._id, 1) : _addItemToSessionCart(product._id, product.name, product.price, 1) ">Add to Cart</button>
+                <button class="btn btn-md btn-primary" (click)="isLoggedin ? _addItemToCart(product._id, 1) : _addItemToSessionCart(product._id, product.name, product.price, 1) ">Add to Cart</button>
               </div>
             </div>
           </div>
