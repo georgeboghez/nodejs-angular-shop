@@ -28,7 +28,7 @@ export class AuthService {
       this.isLoggedin = false;
     }
     this.socialAuthService = sas;
-        console.log(this.socialUser)
+    // console.log(this.socialUser)
     
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
@@ -76,7 +76,7 @@ export class AuthService {
     if(this.getLoggedInStatus()) {
       // this.socialAuthService.signOut();
       localStorage.clear();
-
+      
     }
     location.reload();
     // localStorage.removeItem("isLoggedin");

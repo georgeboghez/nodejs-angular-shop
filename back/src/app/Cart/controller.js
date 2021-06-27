@@ -3,11 +3,12 @@ const productRepository = require('../Product/repository');
 
 exports.addItemToCart = async (req, res) => {
     const {
-        productId
+        productId,
+        email
     } = req.body;
     const quantity = Number.parseInt(req.body.quantity);
     try {
-        let cart = await cartRepository.cart();
+        let cart = await cartRepository.cart(email);
         let productDetails = await productRepository.productById(productId);
         if (!productDetails) {
             return res.status(500).json({
@@ -70,6 +71,7 @@ exports.addItemToCart = async (req, res) => {
                     total: parseInt(productDetails.price * quantity),
                     price: productDetails.price
                 }],
+                email: email,
                 subTotal: parseInt(productDetails.price * quantity)
             }
             cart = await cartRepository.addItem(cartData)
@@ -86,8 +88,11 @@ exports.addItemToCart = async (req, res) => {
     }
 }
 exports.getCart = async (req, res) => {
+    const {
+        email
+    } = req.query;
     try {
-        let cart = await cartRepository.cart()
+        let cart = await cartRepository.cart(email)
         if (!cart) {
             return res.status(400).json({
                 type: "Invalid",
@@ -110,11 +115,11 @@ exports.getCart = async (req, res) => {
 
 exports.removeItemFromCart = async (req, res) => {
     const {
-        productId
+        productId,
+        email
     } = req.body;
-    console.log(req.body)
     try {
-        let cart = await cartRepository.cart();
+        let cart = await cartRepository.cart(email);
         let productDetails = await productRepository.productById(productId);
         if (!productDetails) {
             return res.status(500).json({
@@ -152,8 +157,11 @@ exports.removeItemFromCart = async (req, res) => {
 }
 
 exports.emptyCart = async (req, res) => {
+    const {
+        email
+    } = req.body;
     try {
-        let cart = await cartRepository.cart();
+        let cart = await cartRepository.cart(email);
         cart.items = [];
         cart.subTotal = 0
         let data = await cart.save();

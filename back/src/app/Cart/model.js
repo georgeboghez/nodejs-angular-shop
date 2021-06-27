@@ -26,6 +26,10 @@ const CartSchema = new Schema({
     subTotal: {
         default: 0,
         type: Number
+    },
+    email: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

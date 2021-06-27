@@ -27,6 +27,7 @@ export class ProductsComponent implements OnInit {
     let payload = {
       productId: id,
       quantity,
+      email: AuthService.getIntance().socialUser.email,
     };
     this.http.addToCart(payload).subscribe(() => {
       this._getProducts();
@@ -60,6 +61,7 @@ export class ProductsComponent implements OnInit {
     localStorage.setItem("sessionCart", JSON.stringify(this.sessionCart));
   }
   ngOnInit(): void {
+    this._getLoggedInStatus();
     this._getSessionCart();
     this._getProducts();
   }

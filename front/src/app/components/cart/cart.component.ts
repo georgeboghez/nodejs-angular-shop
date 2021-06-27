@@ -18,9 +18,9 @@ export class CartComponent implements OnInit {
   sessionCart: Array<Item> = [];
   constructor(private http: HttpService) {}
   _getCart(cb: Function): void {
-    this.http.getCartItems().subscribe((data: any) => {
+    this.http.getCartItems(`email=${AuthService.getIntance().socialUser.email}`).subscribe((data: any) => {
       this.carts = data.data;
-      cb()
+      // cb()
     });
   }
   _increamentSessionQTY(id: any, name:any, price:any, quantity: any): void {
@@ -43,6 +43,7 @@ export class CartComponent implements OnInit {
     const payload = {
       productId: id,
       quantity,
+      email: AuthService.getIntance().socialUser.email,
     };
     this.http.increaseQty(payload).subscribe(() => {
       this._getCart(() => alert('Product Added'));
@@ -50,7 +51,8 @@ export class CartComponent implements OnInit {
   }
   _removeProduct(id: any): void {
     const payload = {
-      productId: id
+      productId: id,
+      email: AuthService.getIntance().socialUser.email,
     };
     this.http.removeFromCart(payload).subscribe(() => {
       this._getCart(() => alert('Product Removed'));
@@ -67,11 +69,14 @@ export class CartComponent implements OnInit {
     localStorage.setItem("sessionCart", JSON.stringify(this.sessionCart));
   }
   calcSubTotal(): Number {
+    if(this.sessionCart.length == 0) {
+      return 0;
+    }
     return this.sessionCart.map(item => item.total).reduce((acc, next) => acc + next);
   }
   _emptyCart(): void {
     if(this.isLoggedin) {
-      this.http.emptyCart().subscribe(() => {
+      this.http.emptyCart(AuthService.getIntance().socialUser.email).subscribe(() => {
         this._getCart(() => alert('Cart Emptied'));
       });
     }
@@ -86,7 +91,7 @@ export class CartComponent implements OnInit {
   }
   _getSessionCart(): void {
     let tempSessionCart = localStorage.getItem("sessionCart");
-    if (tempSessionCart != null) {
+    if (tempSessionCart) {
       this.sessionCart = JSON.parse(tempSessionCart);
     }
   }

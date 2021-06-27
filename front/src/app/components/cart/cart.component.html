@@ -4,7 +4,7 @@
       <div class="row mt-5">
         <div class="col-lg-9">
           <div class="row shop-listing">
-            <table class="table shop-table"> <!--*ngIf="carts"-->
+            <table class="table shop-table" *ngIf="carts || sessionCart">
               <tr>
                 <th class="b-0">Name</th>
                 <th class="b-0 text-center">Price (RON)</th>
